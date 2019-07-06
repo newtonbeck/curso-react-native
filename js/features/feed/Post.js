@@ -3,16 +3,20 @@ import { Dimensions, View, Text, Image } from 'react-native';
 
 const width = Dimensions.get('screen').width;
 
-const Post = ({ post }) => {
-  const { loginUsuario, urlFoto } = post;
-  return (
-    <View>
-      <Text>{loginUsuario}</Text>
-      <Image 
-        style={{ width: width, height: width }} 
-        source={{ uri: urlFoto }} />
-    </View>
-  );
-}
+const Cabecalho = ({ post }) => (
+  <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
+    <Image 
+      style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }} 
+      source={{ uri: post.urlPerfil }} />
+    <Text>{post.loginUsuario}</Text>
+  </View>
+);
 
-export default Post;
+export const Post = ({ post }) => (
+  <View>
+    <Cabecalho post={post} />
+    <Image 
+      style={{ width: width, height: width }} 
+      source={{ uri: post.urlFoto }} />
+  </View>
+);

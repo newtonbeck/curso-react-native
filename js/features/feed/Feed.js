@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, SafeAreaView, StyleSheet, FlatList } from 'react-native';
-import Post from './Post';
+import { SafeAreaView, StyleSheet, FlatList } from 'react-native';
+import { Post } from './Post';
 
 export default class Feed extends Component {
   
