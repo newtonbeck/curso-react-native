@@ -67,3 +67,11 @@
 
 - https://www.youtube.com/watch?v=5PS6ku8NzIE&list=PLirko8T4cEmx5eBb1-9j6T6Gl4aBtZ_5x
 - https://flexboxfroggy.com/
+
+## Coisas pra estudar em JS
+
+- https://javascript30.com/
+- Clean Code:
+  - Sem grana: https://www.youtube.com/watch?v=9w3o9NHXqu0
+  - Com grana: https://www.livrariacultura.com.br/p/livros/informatica-e-tecnologia/software/codigo-limpo-2874223?id_link=8787&adtype=pla&id_link=8787&gclid=CjwKCAjw98rpBRAuEiwALmo-yrY4TOyioOt0SQrpELcU-nnULBIC6sGc0catYAiyLmiaQUAxPjy6wxoC_H4QAvD_BwE
+- Clean Architecture and Design: https://www.youtube.com/watch?v=Nsjsiz2A9mg
