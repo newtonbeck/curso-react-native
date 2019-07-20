@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, FlatList } from 'react-native';
-import { Post } from './Post';
+import React, { Component } from "react";
+import { SafeAreaView, StyleSheet, FlatList } from "react-native";
+import { Post } from "./Post";
 
 export default class Feed extends Component {
-  
   constructor() {
     super();
     this.state = {
       posts: []
-    }
+    };
   }
 
   async componentDidMount() {
-    const resposta = await fetch('https://instalura-api.herokuapp.com/api/public/fotos/rafael');
+    const resposta = await fetch(
+      "https://instalura-api.herokuapp.com/api/public/fotos/rafael"
+    );
     const json = await resposta.json();
-    this.setState({posts: json});
+    this.setState({ fields: json });
   }
-  
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
           data={this.state.posts}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({item}) => (<Post post={item} />)} />
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => <Post post={item} />}
+        />
       </SafeAreaView>
     );
   }
@@ -31,6 +33,6 @@ export default class Feed extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
