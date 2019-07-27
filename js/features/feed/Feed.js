@@ -4,10 +4,6 @@ import { Post } from "./Post";
 
 export default class Feed extends Component {
 
-  static navigationOptions = {
-    header: null
-  }
-
   constructor() {
     super();
     this.state = {
@@ -15,8 +11,33 @@ export default class Feed extends Component {
     };
   }
 
-  onLike = (postId) => {
-    alert(postId);
+  onLike = async (postId) => {
+    const post = this.state.posts.find((post) => post.id === postId);
+
+    const postLikeado = {
+      ...post,
+      likeada: !post.likeada,
+    };
+
+    const postsAtualizados = this.state.posts.map((post) => {
+      return post.id !== postId ? post : postLikeado;
+    });
+
+    this.setState({ posts: postsAtualizados });
+
+    // Enviar o like pro servidor
+
+    const token = await AsyncStorage.getItem('token');
+
+    await fetch(
+      `https://instalura-api.herokuapp.com/api/fotos/${postId}/like`, {
+      method: 'POST',
+      headers: new Headers({'X-AUTH-TOKEN': token})
+    });
+  }
+
+  navegaParaPost = () => {
+    this.props.navigation.navigate('Post');
   }
 
   async componentDidMount() {
@@ -37,7 +58,7 @@ export default class Feed extends Component {
         <FlatList
           data={this.state.posts}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <Post post={item} onLikeClick={this.onLike} />}
+          renderItem={({ item }) => <Post post={item} onLikeClick={this.onLike} navegaParaPost={this.navegaParaPost} />}
         />
       </SafeAreaView>
     );

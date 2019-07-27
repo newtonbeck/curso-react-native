@@ -8,7 +8,8 @@ import {
 import { AreaDeslogado } from "./js/modules/AreaDeslogado";
 
 const AreaLogado = createStackNavigator({
-  Home: { screen: Feed }
+  Home: { screen: Feed },
+  Post: { screen: Feed }
 });
 
 const AppNavigation = createSwitchNavigator(

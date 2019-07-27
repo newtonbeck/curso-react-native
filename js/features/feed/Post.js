@@ -18,19 +18,23 @@ const Cabecalho = ({ post }) => (
 export const Like = ({ post, onHeartClick }) => (
   <View style={{ flexDirection: "row", alignItems: "center", margin: 10 }}>
     <TouchableOpacity onPress={() => onHeartClick(post.id)}>
-      <Ionicons style={{ marginRight: 10 }} name={post.likeada ? 'md-heart' : 'md-heart-empty'} size={48} color={post.likeada ? 'red' : 'black' } />
+      <Ionicons style={{ marginRight: 10 }} 
+        name={post.likeada ? 'md-heart' : 'md-heart-empty'} 
+        size={48} color={post.likeada ? 'red' : 'black' } />
     </TouchableOpacity>
     <Text>{post.likers.length} pessoas gostaram do seu post</Text>
   </View>
 );
 
-export const Post = ({ post, onLikeClick }) => (
+export const Post = ({ post, onLikeClick, navegaParaPost }) => (
   <View>
-    <Cabecalho post={post} />
-    <Image
-      style={{ width: width, height: width }}
-      source={{ uri: post.urlFoto }}
-    />
+    <TouchableOpacity onPress={navegaParaPost}>
+      <Cabecalho post={post} />
+      <Image
+        style={{ width: width, height: width }}
+        source={{ uri: post.urlFoto }}
+      />
+    </TouchableOpacity>
     <Like post={post} onHeartClick={onLikeClick} />
   </View>
 );
