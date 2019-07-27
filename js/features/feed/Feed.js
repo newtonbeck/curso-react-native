@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, StyleSheet, FlatList } from "react-native";
+import { SafeAreaView, StyleSheet, FlatList, AsyncStorage } from "react-native";
 import { Post } from "./Post";
 
 export default class Feed extends Component {
@@ -16,8 +16,12 @@ export default class Feed extends Component {
   }
 
   async componentDidMount() {
+    const token = await AsyncStorage.getItem('token');
     const resposta = await fetch(
-      "https://instalura-api.herokuapp.com/api/public/fotos/rafael"
+      "https://instalura-api.herokuapp.com/api/fotos",
+      {
+        headers: new Headers({'X-AUTH-TOKEN': token})
+      }
     );
     const json = await resposta.json();
     this.setState({ posts: json });
