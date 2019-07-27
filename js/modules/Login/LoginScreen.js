@@ -2,10 +2,9 @@ import React from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   Button,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from "react-native";
 import { InstaTextInput } from "../../components/InstaTextInput";
 // import { InstaButton } from "../../components/InstaButton";
@@ -15,7 +14,10 @@ import { InstaTextInput } from "../../components/InstaTextInput";
 // 3 - Altera o InstaTextInput: onChangeText, value
 export class LoginScreen extends React.Component {
   state = {
-    values: {},
+    values: {
+      login: 'rafael',
+      senha: '123456'
+    },
     errors: {}
   };
 
@@ -33,6 +35,33 @@ export class LoginScreen extends React.Component {
       });
     };
   };
+
+  fazLogin = async () => {
+    // Mostrar um ActivityIndicator
+    const resposta = await fetch(
+      'https://instalura-api.herokuapp.com/api/public/login', 
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        login: this.state.values.login,
+        senha: this.state.values.senha
+      }),
+      headers: new Headers({'Content-type': 'application/json'})
+    });
+    // Não mostrar um ActivityIndicator
+
+    if (resposta.ok) {
+      const token = await resposta.text();
+      AsyncStorage.setItem('token', token);
+      this.props.navigation.navigate('Logado')
+    } else {
+      this.setState({
+        errors: {
+          login: 'O usuário ou senha estão errados'
+        }
+      })
+    }
+  }
 
   render() {
     return (
@@ -58,9 +87,7 @@ export class LoginScreen extends React.Component {
 
         <Button
           title="Logar"
-          onPress={() => {
-            alert("Clicando no Botao ");
-          }}
+          onPress={this.fazLogin}
         />
         {/* <Button style={{ backgroundColor: "red" }} title="Logar" /> */}
       </View>

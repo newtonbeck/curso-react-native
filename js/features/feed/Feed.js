@@ -3,6 +3,11 @@ import { SafeAreaView, StyleSheet, FlatList } from "react-native";
 import { Post } from "./Post";
 
 export default class Feed extends Component {
+
+  static navigationOptions = {
+    header: null
+  }
+
   constructor() {
     super();
     this.state = {
@@ -15,7 +20,7 @@ export default class Feed extends Component {
       "https://instalura-api.herokuapp.com/api/public/fotos/rafael"
     );
     const json = await resposta.json();
-    this.setState({ fields: json });
+    this.setState({ posts: json });
   }
 
   render() {
