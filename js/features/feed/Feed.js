@@ -1,28 +1,12 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, FlatList, AsyncStorage } from "react-native";
 import { Post } from "./Post";
-import { store } from "../../../App";
+import { connect } from 'react-redux';
 
-export default class Feed extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      posts: []
-    };
-
-    store.subscribe(() => {
-      this.setState({
-        posts: store.getState()
-      });
-    });
-  }
+class Feed extends Component {
 
   onLike = async (postId) => {
-    store.dispatch({
-      type: 'LIKE',
-      postId
-    });
+    this.props.like(postId);
 
     // Enviar o like pro servidor
 
@@ -49,17 +33,14 @@ export default class Feed extends Component {
     );
     const json = await resposta.json();
 
-    store.dispatch({
-      type: 'ADD_POSTS',
-      posts: json
-    });
+    this.props.addPosts(json);
   }
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
-          data={this.state.posts}
+          data={this.props.posts}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Post post={item} onLikeClick={this.onLike} navegaParaPost={this.navegaParaPost} />}
         />
@@ -73,3 +54,38 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    posts: state.posts
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addPosts: (json) => {
+      dispatch({
+        type: 'ADD_POSTS',
+        posts: json
+      })
+    },
+    like: (postId) => {
+      dispatch({
+        type: 'LIKE',
+        postId
+      })
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(Feed);
+
+
+
+
+
+
+
+
