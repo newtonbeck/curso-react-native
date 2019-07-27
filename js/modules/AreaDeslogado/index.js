@@ -4,7 +4,7 @@ import Felipe from "../../features/felipe/Felipe";
 export const AreaDeslogado = createStackNavigator({
   // UrlDaTela: { screen: ComponenteDaTela }
   Login: {
-    // screen: LoginScreen
-    screen: Felipe
+    screen: LoginScreen
+    // screen: Felipe
   }
 });

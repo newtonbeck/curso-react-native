@@ -15,6 +15,10 @@ export default class Feed extends Component {
     };
   }
 
+  onLike = (postId) => {
+    alert(postId);
+  }
+
   async componentDidMount() {
     const token = await AsyncStorage.getItem('token');
     const resposta = await fetch(
@@ -33,7 +37,7 @@ export default class Feed extends Component {
         <FlatList
           data={this.state.posts}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <Post post={item} />}
+          renderItem={({ item }) => <Post post={item} onLikeClick={this.onLike} />}
         />
       </SafeAreaView>
     );
