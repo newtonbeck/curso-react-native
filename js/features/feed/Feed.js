@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { SafeAreaView, StyleSheet, FlatList, AsyncStorage } from "react-native";
 import { Post } from "./Post";
+import { store } from "../../../App";
 
 export default class Feed extends Component {
 
@@ -9,21 +10,19 @@ export default class Feed extends Component {
     this.state = {
       posts: []
     };
+
+    store.subscribe(() => {
+      this.setState({
+        posts: store.getState()
+      });
+    });
   }
 
   onLike = async (postId) => {
-    const post = this.state.posts.find((post) => post.id === postId);
-
-    const postLikeado = {
-      ...post,
-      likeada: !post.likeada,
-    };
-
-    const postsAtualizados = this.state.posts.map((post) => {
-      return post.id !== postId ? post : postLikeado;
+    store.dispatch({
+      type: 'LIKE',
+      postId
     });
-
-    this.setState({ posts: postsAtualizados });
 
     // Enviar o like pro servidor
 
@@ -49,7 +48,11 @@ export default class Feed extends Component {
       }
     );
     const json = await resposta.json();
-    this.setState({ posts: json });
+
+    store.dispatch({
+      type: 'ADD_POSTS',
+      posts: json
+    });
   }
 
   render() {
